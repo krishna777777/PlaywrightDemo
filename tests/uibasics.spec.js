@@ -75,22 +75,31 @@ test.only('proper login', async function login({page}) {
     }
 
     console.log(g)
-
-
-
-
-
-    
-
-
-
-
-
-
-    
-
-
-    
 });
 
+test ('UI Controls ', async function controls({page}){
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+    const username = page.locator('input#username');
+    const password = page.locator('input#password');
+    const dropdown = page.locator('select.form-control');
+    await dropdown.selectOption('consult');
+    
+    await page.locator('input[type="radio"][value="user"] ~ span.checkmark').click();
+    //to see if the radio button is checked or not 
+    expect(await page.locator('input[type="radio"][value="user"] ~ span.checkmark').isChecked());
+    await page.locator('#okayBtn').click();
+
+    await expect(page.locator('a[class=blinkingText]')).toHaveAttribute('class','blinkingText');
+    //  a new inspector gets opened in the browser
+    await page.pause();
+    
+
+
+
+
+
+
+
+
+});
 
