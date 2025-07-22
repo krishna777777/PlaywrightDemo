@@ -148,7 +148,7 @@ test('Window Handling', async function windowHandling({browser}){
 });
 
 
-test.only('E2E', async function e2e({browser}) {
+test('E2E', async function e2e({browser}) {
     let context = await browser.newContext()
     const page = await context.newPage()
     page.goto('https://rahulshettyacademy.com/client')
@@ -234,12 +234,22 @@ test.only('E2E', async function e2e({browser}) {
     }
 
    expect(tr).toBeGreaterThanOrEqual(1); 
+});
 
-
-
-
-
-
+test.only('exclusive locators', async function exclusive({browser}){
+    let context = await browser.newContext({viewport:null});
+    let page = await context.newPage();
+    await page.goto('https://rahulshettyacademy.com/angularpractice/');
+    await page.getByLabel("Check me out if you Love IceCreams!").click();
+    await page.getByLabel("Employed").check();
+    await page.getByLabel("Gender").selectOption("Female");
+    // there is a locator called getBy Role as well where we can get by role ie: buttons , checkboxes etc...
+    await page.getByRole('button').click();
+    const value = await page.getByText("Success! The Form has been submitted successfully!.").isVisible();
+    console.log(value);
+    await page.getByRole("link",{name:"shop"}).click();
+    await page.locator("app-card").filter({hasText:"Nokia Edge"}).getByRole('button').click();
+    await page.pause();
 
 
 
@@ -251,4 +261,11 @@ test.only('E2E', async function e2e({browser}) {
 
 
 });
+
+
+
+
+
+
+
 
