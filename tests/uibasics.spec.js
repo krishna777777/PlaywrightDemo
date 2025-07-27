@@ -236,7 +236,7 @@ test('E2E', async function e2e({browser}) {
    expect(tr).toBeGreaterThanOrEqual(1); 
 });
 
-test.only('exclusive locators', async function exclusive({browser}){
+test('exclusive locators', async function exclusive({browser}){
     let context = await browser.newContext({viewport:null});
     let page = await context.newPage();
     await page.goto('https://rahulshettyacademy.com/angularpractice/');
@@ -250,8 +250,60 @@ test.only('exclusive locators', async function exclusive({browser}){
     await page.getByRole("link",{name:"shop"}).click();
     await page.locator("app-card").filter({hasText:"Nokia Edge"}).getByRole('button').click();
     await page.pause();
+});
+
+test('calender', async function calender({browser})
+{
 
 
+    let context = await browser.newContext()
+    let page = await context.newPage();
+    await page.goto("https://rahulshettyacademy.com/seleniumPractise/#/offers");
+    await page.locator("//div//input[@name='month']").fill("7")
+    await page.locator("//div//input[@name='day']").fill("1")
+    await page.locator("//div//input[@name='year']").fill("1999")
+    await page.locator("//button[@class='react-date-picker__calendar-button react-date-picker__button']").click();
+    await page.pause();
+
+
+
+});
+
+test('hidden', async function calender({browser})
+{
+
+
+    let context = await browser.newContext()
+    let page = await context.newPage();
+    await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+    await expect(page.locator('input.inputs.displayed-class')).toBeVisible();
+    await page.locator("//input[@value='Hide']").click();
+    await expect(page.locator('input.inputs.displayed-class')).toBeHidden();
+    // await page.pause();
+    page.on('dialog',dialog=>dialog.accept());
+    await page.locator("//input[@value='Alert']").click();
+    await page.locator('#mousehover').hover()
+    await page.locator("//div[@class='mouse-hover-content']//a[text()='Top']").click();
+    await page.pause();
+
+
+
+});
+
+
+test.only('frames', async function frames({browser})
+{
+
+
+    let context = await browser.newContext()
+    let page = await context.newPage();
+    await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+    // switching to frames
+    const framespage=  page.frameLocator("#courses-iframe");
+    await framespage.locator("li a[href*='lifetime-access']:visible").click();
+    let count = await framespage.locator(".text h2").textContent();
+    count = count.split(' ')
+    console.log(count[1])
 
 
 
